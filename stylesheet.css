@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -17,32 +19,107 @@ section {
     box-shadow: 7px 7px 1px #e7dbdb;
 }
 
-.tictactoe__box {
+.tictactoe__box{
 
     box-shadow: 5px solid rgb(165, 27, 27);
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
+
+    position: relative;
 }
 
-.box{
+.box {
     height: 12rem;
+    text-align: ;
+    position: relative;
+
 }
+
 
 button {
 
     border-radius: 99em;
     padding: 1.5em 4em;
     background-color: rgb(116, 214, 214);
-    color:rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     font-size: large;
     border: none;
     box-shadow: 0px 2px 1px gray;
+
+    &:focus {
+        box-shadow: none
+    }
+}
+
+.line{
+    /* background-color: aqua; */
+    width:1.2rem;
+    position: absolute;
+    height: 590px;
+    /* z-index: 1; */
+
+
+
+}
+
+.line--one {
+    /* right: 33%; */
+    padding: 0;
+    right:0;
+    top:0;
+    
     
 
 }
 
-
-button:focus{
-    box-shadow: none
+.line--two{
+    padding: 0;
+    right:0;
+    top:0;
 }
+
+.line--three{
+    bottom: 0;
+    transform: rotate(90deg);
+
+}
+
+.line--four{
+    /* left: 25%; */
+    /* height:100%; */
+    /* dimensions having problems due to position ab */
+    top: 38%;
+    transform: rotate(90deg);
+
+}
+
+
+line{
+    animation: lineduration 1s linear ;
+    stroke-linecap: round;
+    stroke-dasharray: 550 ;
+    
+
+    
+  }   
+
+@keyframes lineduration {
+    0%{ 
+
+        stroke-dashoffset: 540
+    
+        }   
+    100%{
+
+        stroke-dashoffset: 0 ;
+
+    }     
+
+    /* Could you use a variable to dictate which direction the line goes using JS, 
+    based on win?
+     */
+
+}
+
+
