@@ -32,7 +32,6 @@ section {
 
 .box {
     height: 12rem;
-    text-align: ;
     position: relative;
 
 }
@@ -62,7 +61,7 @@ button {
 
     animation: lineduration 1s linear ;
     stroke-linecap: round;
-    stroke-dasharray: 550 ;
+    stroke-dasharray: 570 ;
 
 
 
@@ -84,14 +83,14 @@ button {
     transform: rotate(-90deg);
     transform-origin: top left;
     top: 0;
-    left: 0;
+    left: 0; 
 
 }
 
 @keyframes lineduration {
     0%{ 
 
-        stroke-dashoffset: 540
+        stroke-dashoffset: 570
     
         }   
     100%{
