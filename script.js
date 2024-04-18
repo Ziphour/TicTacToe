@@ -65,12 +65,14 @@ const Gamecontroller = (function () {
       box.marker(activeplayer);
     } else { droptkn() }
 
+    // CHECK WIN COND HERE
+
     /*activeplayer needed in arg?*/
     // box.target.src = Gamecontroller.activeplayer.markerimg
 
   }
 
-  return { droptkn, startGame, newTurn , players}
+  return { droptkn, startGame, newTurn, players, activeplayer }
 
 
 })();
@@ -90,38 +92,54 @@ function Cell() {
 }
 
 
-// const Stylechange = () => null;
+const Stylechange = function () {
+
+  const cursorChange = activeplayer => document.body.style.cursor = activeplayer.cursor
+  //  might need active player gamecontroller
+  
+  const defaultCursor = () =>  document.body.style.cursor =  j.jpg
+
+  const cursorAnimation = () => document.body.style.cursor = smoke.gif
+
+  return { defaultCursor, cursorChange, cursorAnimation }
+
+
+};
 
 // win cond
 
-const winCond = (function (){
+const winCond = (function () {
 
   const winConditionList = [
-    [[1,1],[1,2],[1,3]],
-    [[2,1],[2,2],[2,3]],
-    [[3,1],[3,2],[3,3]],
-    [[1,1],[2,1],[3,1]],
-    [[1,2],[2,2],[3,2]],
-    [[1,3],[2,3],[3,3]],
-    [[1,1],[2,2],[3,3]],
-    [[1,3],[2,2],[1,3]],
+    [[1, 1], [1, 2], [1, 3]],
+    [[2, 1], [2, 2], [2, 3]],
+    [[3, 1], [3, 2], [3, 3]],
+    [[1, 1], [2, 1], [3, 1]],
+    [[1, 2], [2, 2], [3, 2]],
+    [[1, 3], [2, 3], [3, 3]],
+    [[1, 1], [2, 2], [3, 3]],
+    [[1, 3], [2, 2], [1, 3]],
   ]
 
- const winCheck = function(){
+  const winCheck = function () {
 
-  for (i=0; i < winConditionList.length; i++){
+    for (i = 0; i < winConditionList.length; i++) {
 
-    let test = winConditionList[i].every(value => value)
+      let test = winConditionList[i].every(value => value.every(Numb => let[row, col] = Numb.split('')))
+      // get co-ord of two numb, check if it's equ = activeplayer.marker
+      // if not skip, if the code fully runs through, activate win condition
+      // BIGGEST ROADBLOCK, how do I get values inside two arrays
 
-
-    for(j=0; j<3; j++){
-      winConditionList[i][j]
+      // use splice to put it into two []? {...} = box[][]
+      // breaks move onto next one, if no break declare winner
+      for (j = 0; j < 3; j++) {
+        winConditionList[i][j]
+      }
     }
+
   }
 
- } 
-  
-return {winConditionList}
+  return { winConditionList }
 
 })()
 
@@ -133,12 +151,13 @@ const popup = document.querySelector("#modal")
 
 
 //  Modal
-newModal.addEventListener('click', () => popup.showModal() );
+newModal.addEventListener('click', () => popup.showModal());
 
 // playermaker
 
 let playerProfile = document.querySelector('#textbox_id')
 playerProfile.addEventListener('submit', e => {
+
   e.preventDefault()
   const data = new FormData(e.target);
   console.log(data)
@@ -149,18 +168,18 @@ playerProfile.addEventListener('submit', e => {
   popup.close();
 
 
-    function playermaker(Username) {
+  function playermaker(Username , marker) {
 
-        Username = Username;
-        // make marker 1 or 0 based on clicked icon which has object that gives values to be spread
+    Username = Username;
+    Marker = Marker
+    token = Marker == 'X' ? 1 : 2
+    Cursor = Marker == 'X' ? 'https://static-00.iconduck.com/assets.00/x-letter-emoji-256x256-uctmh0lm.png' : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Small-dark-grey-circle.svg/1024px-Small-dark-grey-circle.svg.png'
+    // Markerimg = Marker == 1 ? MarkerX.jpg : MarkerO.jpg
+    let Score = 0
 
-        // Cursor = Marker == 1 ? BlueXCursor.jpg : RedOCursor.jpg
-        // Markerimg = Marker == 1 ? MarkerX.jpg : MarkerO.jpg
-        let Score = 0
+    return { Username, Score }
 
-        return { Username, Score }
-
-    }
+  }
 
 
 
@@ -170,7 +189,7 @@ playerProfile.addEventListener('submit', e => {
 
 
 
-// startGameonButton() 
+// startGameonButton()
 
 // Start button, input players, animation crosses active, plays the game, winner update score,
 // retry button without animation start(would this matter as animation is on?), adds score.
