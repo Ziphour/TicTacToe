@@ -33,37 +33,53 @@ Gameboard = []
 for (i = 0; i < 3; i++) {
   Gameboard[i] = []
   for (j = 0; j < 3; j++) {
-    Gameboard[i].push(0)
+    Gameboard[i].push(Cell())
   }
 }
   
+function Cell() {
+
+    let value = 0
+  
+    const getvalue = () => value;
+  
+    const marker = (player) => value = player.marker
+  
+    return { getvalue, marker }
+  
+  }
+  
+
+
+
+
 const winCondTEST = (function () {
 
     const winConditionList = [
-        [[1, 1], [1, 2], [1, 3]],
-        [[2, 1], [2, 2], [2, 3]],
-
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        // REMEMBER YOU NEED TO CHANGE THE OG SCRIPT WIN COND BEC YOU NEED TO MINUS THEM BY -1
     ]
-
+    // make row col for all three, map them into new array, then do the every thing one
+    // cheeck includes column
     winConditionList.every(value => value === 0)
     // this should give a total win
 
     for (i = 0; i < winConditionList.length; i++) {
 
+        let gameBoardTokens = winConditionList[i].map(checkTokens)
 
-        for (j = 0; j < 3; j++){
-
-           const [row, col] = winConditionList[i][j]
-           if(Gameboard[row][col].getvalue !== 1){
-            console.log('break test')
-            break;
-           }
-
+        function checkTokens(value){
+            let [row, col] = value
+            return Gameboard[row][col].getvalue()
         }
 
-        alert('You win!')
-     }
-   
+        console.log(gameBoardTokens)
+
+        const checkWin = gameBoardTokens.every(value => value === 0)
+        if (checkWin === true){console.log(`congrats!`) }
+
+    }
     // check if one two three in another loop all equal, token if not BREAK loop
              // const [row, col] = innerWincondiValues
 
