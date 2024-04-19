@@ -30,6 +30,7 @@ const Gamecontroller = (function () {
 
       droptkn()
       console.log(Gameboard)
+      winCheck()
       newTurn()
 
 
@@ -72,7 +73,7 @@ const Gamecontroller = (function () {
 
   }
 
-  return { droptkn, startGame, newTurn, players, activeplayer }
+  return { droptkn, startGame, newTurn, players, activeplayer, winCheck }
 
 
 })();
@@ -96,8 +97,8 @@ const Stylechange = function () {
 
   const cursorChange = activeplayer => document.body.style.cursor = activeplayer.cursor
   //  might need active player gamecontroller
-  
-  const defaultCursor = () =>  document.body.style.cursor =  j.jpg
+
+  const defaultCursor = () => document.body.style.cursor = j.jpg
 
   const cursorAnimation = () => document.body.style.cursor = smoke.gif
 
@@ -111,36 +112,38 @@ const Stylechange = function () {
 const winCond = (function () {
 
   const winConditionList = [
-    [[1, 1], [1, 2], [1, 3]],
-    [[2, 1], [2, 2], [2, 3]],
-    [[3, 1], [3, 2], [3, 3]],
-    [[1, 1], [2, 1], [3, 1]],
-    [[1, 2], [2, 2], [3, 2]],
-    [[1, 3], [2, 3], [3, 3]],
-    [[1, 1], [2, 2], [3, 3]],
-    [[1, 3], [2, 2], [1, 3]],
+    [[0, 0], [0, 1], [0, 2]],
+    [[1, 0], [1, 1], [1, 2]],
+    [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 0], [2, 0]],
+    [[0, 1], [1, 1], [2, 1]],
+    [[0, 2], [1, 2], [2, 2]],
+    [[0, 0], [1, 1], [2, 2]],
+    [[0, 2], [1, 1], [0, 2]]
   ]
+
 
   const winCheck = function () {
 
     for (i = 0; i < winConditionList.length; i++) {
 
-      let test = winConditionList[i].every(value => value.every(Numb => let[row, col] = Numb.split('')))
-      // get co-ord of two numb, check if it's equ = activeplayer.marker
-      // if not skip, if the code fully runs through, activate win condition
-      // BIGGEST ROADBLOCK, how do I get values inside two arrays
+      let gameBoardTokens = winConditionList[i].map(checkTokens)
 
-      // use splice to put it into two []? {...} = box[][]
-      // breaks move onto next one, if no break declare winner
-      for (j = 0; j < 3; j++) {
-        winConditionList[i][j]
+      function checkTokens(coordinates) {
+        let [row, col] = coordinates
+        return Gameboard[row][col].getvalue()
       }
+
+      console.log(gameBoardTokens)
+
+      const checkWin = gameBoardTokens.every(value => value === activeplayer.marker)
+      if (checkWin === true) { console.log(`congrats!`) }
+      // needs to break the loop somehow
+      // break all exectuted code
+
     }
-
   }
-
-  return { winConditionList }
-
+  return {winCheck}
 })()
 
 
@@ -168,7 +171,7 @@ playerProfile.addEventListener('submit', e => {
   popup.close();
 
 
-  function playermaker(Username , marker) {
+  function playermaker(Username, marker) {
 
     Username = Username;
     Marker = Marker
