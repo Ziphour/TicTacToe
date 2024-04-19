@@ -53,8 +53,10 @@
 
         const checkWin = gameBoardTokens.every(value => value === activeplayer.marker)
         if (checkWin === true) { 
-        alert(`congrats!`)
+        alert(`congrats ${activeplayer.Username}! 🥳`)
+        // activeplayer.score ++
         throw new Error("Something went badly wrong!");
+        // add score, add name to win
         // could throw the game 
       }
         // needs to break the loop somehow
@@ -143,6 +145,7 @@ const Stylechange = function () {
 
   return { defaultCursor, cursorChange, cursorAnimation }
 
+  // sound effects when win, or wrong move
 
 };
 
