@@ -29,14 +29,11 @@
   
 //   })()
 
-Gameboard = []
-for (i = 0; i < 3; i++) {
-  Gameboard[i] = []
-  for (j = 0; j < 3; j++) {
-    Gameboard[i].push(Cell())
-  }
-}
+Gameboard = [ [ 0, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 0 ] ]
+
   
+// console.log(Gameboard)
+
 function Cell() {
 
     let value = 0
@@ -71,7 +68,7 @@ const winCondTEST = (function () {
 
         function checkTokens(value){
             let [row, col] = value
-            return Gameboard[row][col].getvalue()
+            return Gameboard[row][col]
         }
 
         console.log(gameBoardTokens)

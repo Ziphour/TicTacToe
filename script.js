@@ -1,96 +1,135 @@
-function startGameonButton() {
-  /*put form function in here*/
-  Gameboard = []
-  for (i = 0; i < 3; i++) {
-    Gameboard[i] = []
-    for (j = 0; j < 3; j++) {
-      Gameboard[i].push(Cell())
+  function startGameonButton() {
+    /*put form function in here*/
+    Gameboard = []
+    for (i = 0; i < 3; i++) {
+      Gameboard[i] = []
+      for (j = 0; j < 3; j++) {
+        Gameboard[i].push(Cell())
+      }
     }
+    Gamecontroller.startGame()
+    /*should push players into the array? when?*/
   }
-  Gamecontroller.startGame()
-  /*should push players into the array? when?*/
-}
 
 
-const Gamecontroller = (function () {
-  players = [{
-    Username: `p1`,
-    marker: 1
-  },
+  const Gamecontroller = (function () {
+    players = [{
+      Username: `p1`,
+      marker: 1
+    },
 
-  {
-    Username: `p2`,
-    marker: 2
+    {
+      Username: `p2`,
+      marker: 2
 
 
-  }]
-  const startGame = () => {
+    }]
 
-    for (i = 0; i < 9; i++) {
+    
+    const winConditionList = [
+      [[0, 0], [0, 1], [0, 2]],
+      [[1, 0], [1, 1], [1, 2]],
+      [[2, 0], [2, 1], [2, 2]],
+      [[0, 0], [1, 0], [2, 0]],
+      [[0, 1], [1, 1], [2, 1]],
+      [[0, 2], [1, 2], [2, 2]],
+      [[0, 0], [1, 1], [2, 2]],
+      [[0, 2], [1, 1], [0, 2]]
+    ]
 
-      droptkn()
-      console.log(Gameboard)
-      winCheck()
-      newTurn()
 
+    const winCheck = function () {
+
+      for (j = 0; j < winConditionList.length; j++) {
+
+        let gameBoardTokens = winConditionList[j].map(checkTokens)
+
+        function checkTokens(coordinates) {
+          let [row, col] = coordinates
+          return Gameboard[row][col].getvalue()
+
+        }
+
+
+        const checkWin = gameBoardTokens.every(value => value === activeplayer.marker)
+        if (checkWin === true) { 
+        alert(`congrats!`)
+        throw new Error("Something went badly wrong!");
+        // could throw the game 
+      }
+        // needs to break the loop somehow
+        // break all exectuted code
+
+      }
+    }
+
+    const startGame = () => {
+
+      for (i = 0; i < 9; i++) {
+
+        droptkn()
+        winCheck()
+        newTurn()
+
+
+      }
+
+      alert(`No one won, tie! try again`);
 
     }
 
-    alert(`No one won, tie! try again`);
+
+
+
+    let activeplayer = players[0];
+
+    let switchplayers = () => {
+      activeplayer = activeplayer == players[0] ? players[1] : players[0]
+    }
+
+    let newTurn = () => {
+      switchplayers();
+      alert(`Its ${activeplayer.Username}'s go!`)
+    }
+
+
+
+    const droptkn = function () {
+      let row = prompt(`which row`)
+      let col = prompt(`which col`);
+      row = row - 1
+      col = col - 1
+
+      let box = Gameboard[row][col]
+      if (box.getvalue() === null) {
+        box.marker(activeplayer);
+      } else { droptkn() }
+
+      // CHECK WIN COND HERE
+
+      /*activeplayer needed in arg?*/
+      // box.target.src = Gamecontroller.activeplayer.markerimg
+
+    }
+
+    return { droptkn, startGame, newTurn, players, activeplayer, winCheck }
+
+
+  })();
+
+
+
+  function Cell() {
+
+    let value = null
+
+    const getvalue = () => value;
+
+    const marker = (player) => value = player.marker
+
+    return { getvalue, marker }
 
   }
-
-
-  let activeplayer = players[0];
-
-  let switchplayers = () => {
-    activeplayer = activeplayer == players[0] ? players[1] : players[0]
-  }
-
-  let newTurn = () => {
-    switchplayers();
-    alert(`Its ${activeplayer.Username}'s go!`)
-  }
-
-
-
-  const droptkn = function () {
-    let row = prompt(`which row`)
-    let col = prompt(`which col`);
-    row = row - 1
-    col = col - 1
-
-    let box = Gameboard[row][col]
-    console.log(box.getvalue())
-    if (box.getvalue() === null) {
-      box.marker(activeplayer);
-    } else { droptkn() }
-
-    // CHECK WIN COND HERE
-
-    /*activeplayer needed in arg?*/
-    // box.target.src = Gamecontroller.activeplayer.markerimg
-
-  }
-
-  return { droptkn, startGame, newTurn, players, activeplayer, winCheck }
-
-
-})();
-
-
-
-function Cell() {
-
-  let value = null
-
-  const getvalue = () => value;
-
-  const marker = (player) => value = player.marker
-
-  return { getvalue, marker }
-
-}
 
 
 const Stylechange = function () {
@@ -109,42 +148,6 @@ const Stylechange = function () {
 
 // win cond
 
-const winCond = (function () {
-
-  const winConditionList = [
-    [[0, 0], [0, 1], [0, 2]],
-    [[1, 0], [1, 1], [1, 2]],
-    [[2, 0], [2, 1], [2, 2]],
-    [[0, 0], [1, 0], [2, 0]],
-    [[0, 1], [1, 1], [2, 1]],
-    [[0, 2], [1, 2], [2, 2]],
-    [[0, 0], [1, 1], [2, 2]],
-    [[0, 2], [1, 1], [0, 2]]
-  ]
-
-
-  const winCheck = function () {
-
-    for (i = 0; i < winConditionList.length; i++) {
-
-      let gameBoardTokens = winConditionList[i].map(checkTokens)
-
-      function checkTokens(coordinates) {
-        let [row, col] = coordinates
-        return Gameboard[row][col].getvalue()
-      }
-
-      console.log(gameBoardTokens)
-
-      const checkWin = gameBoardTokens.every(value => value === activeplayer.marker)
-      if (checkWin === true) { console.log(`congrats!`) }
-      // needs to break the loop somehow
-      // break all exectuted code
-
-    }
-  }
-  return {winCheck}
-})()
 
 
 // adding players
