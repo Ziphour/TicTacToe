@@ -106,3 +106,8 @@ button {
 }
 
 
+.objectfit{
+    object-fit: scale-down;  
+    height: 180px;
+    width: 180px;
+}

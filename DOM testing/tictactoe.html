@@ -72,20 +72,6 @@
 </body>
 <script src="script.js">
     // put DOM here
-    const tictacBoxes = document.querySelectorAll('.box')
-    console.log(tictacBoxes)
-    tictacBoxes.forEach(box => {
-        box.addEventListener('click', e => console.log(Gameboard[e]))
-    });
-
-    Gameboard = []
-    for (i = 0; i < 3; i++) {
-        Gameboard[i] = []
-        for (j = 0; j < 3; j++) {
-            Gameboard[i].push([tictacBoxes[i]])
-        }
-    }
-
 
 
 </script>
