@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="stylesheet.css" rel="stylesheet">
+</head>
+
+<body>
+    <section class="tictactoe">
+        <div class="tictactoe__box">
+
+            <div class="box box1" id="tl"><img src="">
+                <svg class="line line--vertical">
+                    <line class="" x1="10" y1="10" x2="10" y2="570" stroke="pink" stroke-width="20"> </line>
+
+                </svg>
+
+
+
+            </div>
+            <div class="box box2" id="tm">
+
+                <img src="">
+                <svg class="line line--vertical">
+                    <line class="" x1="10" y1="10" x2="10" y2="570" stroke="pink" stroke-width="20"> </line>
+
+                </svg>
+            </div>
+            <div class="box box3" id="tr"><img src=""></div>
+            <div class="box box4" id="cl"><img src="">
+                <svg class="line line--horizontal">
+                    <line class="" x1="10" y1="10" x2="10" y2="570" stroke="pink" stroke-width="20"> </line>
+
+                </svg>
+            </div>
+            <div class="box box5" id="cm"><img src="">
+            </div>
+            <div class="box box6" id="cr"><img src="">
+
+            </div>
+            <div class="box box7" id="bl"><img src="">
+                <svg class="line line--horizontal">
+                    <line class="" x1="10" y1="10" x2="10" y2="570" stroke="pink" stroke-width="20"> </line>
+
+                </svg>
+
+            </div>
+            <div class="box box8" id="bm"><img src=""></div>
+            <div class="box box9" id="br"><img src=""></div>
+        </div>
+        <button>Start!</button>
+    </section>
+    <section>
+        <button class="Btn">Add player</button>
+        <dialog id="modal">
+            <p>Input new author and Book~</p>
+            <form method="dialog" id="textbox_id">
+
+                <label for="Username">Name:</label>
+                <input type="text" name="Username" required>
+
+
+                <button class="btn2" type="submit">Submit</button>
+            </form>
+
+        </dialog>
+
+    </section>
+</body>
+<script src="script.js">
+    // put DOM here
+    const tictacBoxes = document.querySelectorAll('.box')
+    console.log(tictacBoxes)
+    tictacBoxes.forEach(box => {
+        box.addEventListener('click', e => console.log(Gameboard[e]))
+    });
+
+    Gameboard = []
+    for (i = 0; i < 3; i++) {
+        Gameboard[i] = []
+        for (j = 0; j < 3; j++) {
+            Gameboard[i].push([tictacBoxes[i]])
+        }
+    }
+
+
+
+</script>
+
+</html>

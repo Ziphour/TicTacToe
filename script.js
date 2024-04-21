@@ -9,7 +9,7 @@ function startGameonButton() {
   }
   Gamecontroller.startGame()
   /*should push players into the array? when?*/
-}
+}  
 
 
 const Gamecontroller = (function () {
@@ -55,17 +55,12 @@ const Gamecontroller = (function () {
 
       }
 
-
       const checkWin = gameBoardTokens.every(value => value === activeplayer.marker)
       if (checkWin === true) {
         alert(`congrats ${activeplayer.Username}! 🥳`)
         activeplayer.score++
-        throw new Error("Something went badly wrong!");
-        // add score, add name to win
-        // could throw the game 
+        throw new Error("End's the game!");
       }
-      // needs to break the loop somehow
-      // break all exectuted code
 
     }
   }
@@ -106,15 +101,11 @@ const Gamecontroller = (function () {
     let col = prompt(`which col`);
     row = row - 1
     col = col - 1
+    // this will be replaced by the click.
 
     let box = Gameboard[row][col]
-    if (box.getvalue() === null) {
-      box.marker(activeplayer);
-    } else { droptkn() }
-
-    // CHECK WIN COND HERE
-
-    /*activeplayer needed in arg?*/
+    if (box.getvalue() === null) { box.marker(activeplayer)}
+    else { droptkn() }
     // box.target.src = Gamecontroller.activeplayer.markerimg
 
   }

@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #faecee;
+    box-shadow: 5px solid rgb(165, 27, 27);
+
+}
+
+section {
+    width: 40rem;
+    max-width: ;
+
+    padding: 1rem;
+    background-color: rgb(255, 255, 255);
+    margin: auto;
+    border-radius: 1rem;
+    box-shadow: 7px 7px 1px #e7dbdb;
+}
+
+.tictactoe__box{   
+    box-shadow: 5px solid rgb(165, 27, 27);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+    position: relative;
+}
+
+.box {
+    height: 12rem;
+    position: relative;
+
+}
+
+
+button {
+
+    border-radius: 99em;
+    padding: 1.5em 4em;
+    background-color: rgb(116, 214, 214);
+    color: rgb(255, 255, 255);
+    font-size: large;
+    border: none;
+    box-shadow: 0px 2px 1px gray;
+
+    &:focus {
+        box-shadow: none
+    }
+}
+
+.line{
+    /* background-color: aqua; */
+    width:1.2rem;
+    position: absolute;
+    height: 590px;
+    /* z-index: 1; */
+
+    animation: lineduration 1s linear ;
+    stroke-linecap: round;
+    stroke-dasharray: 570 ;
+
+
+
+
+}
+
+.line--vertical {
+    /* right: 33%; */
+    padding: 0;
+    right:0;
+    top:0;
+    
+    
+
+}
+
+.line--horizontal{
+    
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    top: 0;
+    left: 0; 
+
+}
+
+@keyframes lineduration {
+    0%{ 
+
+        stroke-dashoffset: 570
+    
+        }   
+    100%{
+
+        stroke-dashoffset: 0 ;
+
+    }     
+
+    /* Could you use a variable to dictate which direction the line goes using JS, 
+    based on win?
+     */
+
+}
+
+
