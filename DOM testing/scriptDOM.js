@@ -1,3 +1,18 @@
+function startGameonButton() {
+  /*put form function in here*/
+  Gameboard = []
+  for (i = 0; i < 3; i++) {
+    Gameboard[i] = []
+    for (j = 0; j < 3; j++) {
+      Gameboard[i].push(Cell())
+    }
+  }
+
+  alert(`Its ${Gamecontroller.activeplayer.Username}'s go!`)
+  // Gamecontroller.startGame()
+  // need some way of stopping and starting the game 
+}
+
 const Gamecontroller = (function () {
   players = [{
     Username: `p1`,
@@ -122,20 +137,6 @@ const Gamecontroller = (function () {
 
 })();
 
- function startGameonButton() {
-  /*put form function in here*/
-  Gameboard = []
-  for (i = 0; i < 3; i++) {
-    Gameboard[i] = []
-    for (j = 0; j < 3; j++) {
-      Gameboard[i].push(Cell())
-    }
-  }
-
-  alert(`Its ${Gamecontroller.activeplayer.Username}'s go!`)
-  // Gamecontroller.startGame()
-  // need some way of stopping and starting the game 
-}
 
 
 function Cell() {
