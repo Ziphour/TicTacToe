@@ -31,8 +31,8 @@ const Gamecontroller = (function () {
 
   const startGame = function () {
     makeBoard()
-    alert(`Its ${Gamecontroller.activeplayer.Username}'s go!`)
-    screenSelector.allowClicks()
+    alert(`Its ${activeplayer.Username}'s go!`)
+    screenSelector.allowClicks();
   }
 
   const winConditionList = [
@@ -165,7 +165,7 @@ const screenSelector = (function () {
     })
 
   }
-  
+
   const markeranimationsX = function (e, activeplayer) {
     const node = e.target
     const nodeImg = document.createElement('img')
