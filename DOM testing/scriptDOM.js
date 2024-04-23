@@ -1,3 +1,5 @@
+// Need to check connect 4 oop and read their article
+
 
 const Gamecontroller = (function () {
   players = [{
@@ -17,24 +19,6 @@ const Gamecontroller = (function () {
 
   }]
 
-  const makeBoard = function () {
-
-    Gameboard = []
-    for (i = 0; i < 3; i++) {
-      Gameboard[i] = []
-      for (j = 0; j < 3; j++) {
-        Gameboard[i].push(Cell())
-      }
-    }
-
-  }
-
-  const startGame = function () {
-    makeBoard()
-    alert(`Its ${activeplayer.Username}'s go!`)
-    screenSelector.allowClicks();
-  }
-
   const winConditionList = [
 
     [[0, 0], [0, 1], [0, 2]],
@@ -50,6 +34,8 @@ const Gamecontroller = (function () {
 
 
   const winCheck = function () {
+
+
 
     for (j = 0; j < winConditionList.length; j++) {
 
@@ -69,6 +55,26 @@ const Gamecontroller = (function () {
       }
 
     }
+
+
+  }
+
+  const makeBoard = function () {
+
+    Gameboard = []
+    for (i = 0; i < 3; i++) {
+      Gameboard[i] = []
+      for (j = 0; j < 3; j++) {
+        Gameboard[i].push(Cell())
+      }
+    }
+
+  }
+
+  const startGame = function () {
+    makeBoard()
+    alert(`Its ${activeplayer.Username}'s go!`)
+    screenSelector.allowClicks();
   }
 
   const playRound = function (e) {
@@ -76,7 +82,7 @@ const Gamecontroller = (function () {
     droptkn(e)
     screenSelector.markeranimationsX(e, activeplayer)
     winCheck()
-    // possibly put draw check?
+    // possibly put draw check? drawCheck() or win check with a for loop?
     newTurn()
 
   }
@@ -174,15 +180,34 @@ const screenSelector = (function () {
     node.appendChild(nodeImg)
   }
 
+  const animateLines = function () {
 
-  const updateScreen = () => x
+    const line = document.querySelectorAll('.line');
+    console.log(line)
+    line.forEach(element => {
+      element.style.strokeDashoffset = "0"
+      element.style.animation = "lineduration 1s linear"
+    });
+  
 
-  const startGame = () => Gamecontroller.startGame()
+    // change dash offset 
+    // makke keyframes
+  }
+
+  const updateScreen = () => n
+
+  const startGame = function () {
+
+    animateLines()
+    Gamecontroller.startGame()
+
+  }
+
 
   const startButton = document.querySelector('#startBtn')
   startButton.addEventListener('click', startGame)
 
 
-  return { markeranimationsX, allowClicks,}
+  return { markeranimationsX, allowClicks, }
 
 })()
