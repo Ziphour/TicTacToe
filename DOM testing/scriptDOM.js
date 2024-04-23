@@ -165,9 +165,7 @@ const screenSelector = (function () {
     })
 
   }
-
-  const test = () => console.log('test')
-
+  
   const markeranimationsX = function (e, activeplayer) {
     const node = e.target
     const nodeImg = document.createElement('img')
@@ -180,11 +178,11 @@ const screenSelector = (function () {
   const updateScreen = () => x
 
   const startGame = () => Gamecontroller.startGame()
-  
+
   const startButton = document.querySelector('#startBtn')
   startButton.addEventListener('click', startGame)
 
 
-  return { markeranimationsX, allowClicks, test, startGame }
+  return { markeranimationsX, allowClicks,}
 
 })()
