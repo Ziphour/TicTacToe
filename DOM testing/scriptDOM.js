@@ -188,16 +188,23 @@ const screenSelector = (function () {
       element.style.strokeDashoffset = "0"
       element.style.animation = "lineduration 1s linear"
     });
+    // have to reset all values if you want to restart the game
   
 
     // change dash offset 
     // makke keyframes
   }
 
-  const updateScreen = () => n
+  const updateScreen = () => { 
+  const div = document.querySelectorAll('.box')
+  const img = document.querySelectorAll('img')
+  div.forEach(box => {
+    img.forEach(image => box.removeChild(image))
+  });
+}
 
   const startGame = function () {
-
+    updateScreen()
     animateLines()
     Gamecontroller.startGame()
 
