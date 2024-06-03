@@ -7,6 +7,20 @@ const startGame = function () {
   Gamecontroller.startGame();
 };
 
+const Gameboardcontrol = function () {
+  const makeBoard = function () {
+    Gameboard = [];
+    for (i = 0; i < 3; i++) {
+      Gameboard[i] = [];
+      for (j = 0; j < 3; j++) {
+        Gameboard[i].push(Cell());
+      }
+    }
+  };
+
+  return { makeBoard };
+};
+
 const Gamecontroller = (function () {
   players = [
     {
@@ -90,18 +104,8 @@ const Gamecontroller = (function () {
     }
   };
 
-  const makeBoard = function () {
-    Gameboard = [];
-    for (i = 0; i < 3; i++) {
-      Gameboard[i] = [];
-      for (j = 0; j < 3; j++) {
-        Gameboard[i].push(Cell());
-      }
-    }
-  };
-
   const startGame = function () {
-    makeBoard();
+    Gameboard.makeBoard();
     screenSelector.customCursorSwitch();
     alert(`Its ${getActivePlayer().Username}'s go!`);
     screenSelector.allowClicks();
@@ -152,7 +156,6 @@ const Gamecontroller = (function () {
     getActivePlayer,
     winCheck,
     playRound,
-    makeBoard,
     startGame,
   };
 })();
