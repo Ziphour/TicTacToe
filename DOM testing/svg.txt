@@ -5,3 +5,14 @@
       // newElement.style.width = "329pt"
       // svg.appendChild(newElement);
       // e.target.appendChild(svg)
+
+       /* background-color: aqua; */
+    width:1.2rem;
+    position: absolute;
+    height: 590px;
+    /* z-index: 1; */
+
+    /* animation: lineduration 1s linear ; */
+    stroke-linecap: round;
+    stroke-dasharray: 570 ;
+    stroke-dashoffset: 570;

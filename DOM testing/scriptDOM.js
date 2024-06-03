@@ -1,220 +1,240 @@
 // Need to check connect 4 oop and read their article
 
+const startGame = function () {
+  console.log("tests");
+  screenSelector.resetScreen();
+  screenSelector.animateLines();
+  Gamecontroller.startGame();
+};
 
 const Gamecontroller = (function () {
-  players = [{
-    Username: `p1`,
-    marker: 1,
-    markerImg: 'o.png',
-    score: 0,
+  players = [
+    {
+      Username: `p1`,
+      marker: 1,
+      markerImg: "o.png",
+      cursor: 'url("src/cursor/O.png"), auto',
+      score: 0,
+    },
 
-  },
-
-  {
-    Username: `p2`,
-    marker: 2,
-    markerImg: 'x.png',
-    score: 0
-
-
-  }]
+    {
+      Username: `p2`,
+      marker: 2,
+      markerImg: "x.png",
+      cursor: 'url("src/cursor/x.png"),auto',
+      score: 0,
+    },
+  ];
 
   const winConditionList = [
-
-    [[0, 0], [0, 1], [0, 2]],
-    [[1, 0], [1, 1], [1, 2]],
-    [[2, 0], [2, 1], [2, 2]],
-    [[0, 0], [1, 0], [2, 0]],
-    [[0, 1], [1, 1], [2, 1]],
-    [[0, 2], [1, 2], [2, 2]],
-    [[0, 0], [1, 1], [2, 2]],
-    [[2, 0], [1, 1], [0, 2]]
-
-  ]
-
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ],
+    [
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ],
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+    ],
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+    ],
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+    ],
+    [
+      [2, 0],
+      [1, 1],
+      [0, 2],
+    ],
+  ];
 
   const winCheck = function () {
-
-
-
     for (j = 0; j < winConditionList.length; j++) {
-
-      let gameBoardTokens = winConditionList[j].map(checkTokens)
+      let gameBoardTokens = winConditionList[j].map(checkTokens);
 
       function checkTokens(coordinates) {
-        let [row, col] = coordinates
-        return Gameboard[row][col].getvalue()
+        let [row, col] = coordinates;
+        return Gameboard[row][col].getvalue();
       }
 
-      const checkWin = gameBoardTokens.every(value => value === activeplayer.marker)
+      const checkWin = gameBoardTokens.every(
+        (value) => value === getActivePlayer().marker
+      );
 
       if (checkWin === true) {
-        alert(`congrats ${activeplayer.Username}! 🥳`)
-        activeplayer.score++
+        alert(`congrats ${getActivePlayer().Username}! 🥳`);
+        getActivePlayer().score++;
         throw new Error("End's the game!");
       }
-
     }
-
-
-  }
+  };
 
   const makeBoard = function () {
-
-    Gameboard = []
+    Gameboard = [];
     for (i = 0; i < 3; i++) {
-      Gameboard[i] = []
+      Gameboard[i] = [];
       for (j = 0; j < 3; j++) {
-        Gameboard[i].push(Cell())
+        Gameboard[i].push(Cell());
       }
     }
-
-  }
+  };
 
   const startGame = function () {
-    makeBoard()
-    alert(`Its ${activeplayer.Username}'s go!`)
+    makeBoard();
+    screenSelector.customCursorSwitch();
+    alert(`Its ${getActivePlayer().Username}'s go!`);
     screenSelector.allowClicks();
-  }
+  };
 
   const playRound = function (e) {
-
-    droptkn(e)
-    screenSelector.markeranimationsX(e, activeplayer)
-    winCheck()
+    droptkn(e);
+    screenSelector.markerAnimationsXO(e, getActivePlayer);
+    winCheck();
     // possibly put draw check? drawCheck() or win check with a for loop?
-    newTurn()
+    newTurn();
+  };
 
-  }
-
-
-
-
-
-  let activeplayer = players[0];
+  let activePlayer = players[0];
 
   let switchplayers = () => {
-    activeplayer = activeplayer == players[0] ? players[1] : players[0]
-  }
+    activePlayer = activePlayer == players[0] ? players[1] : players[0];
+  };
+
+  const getActivePlayer = () => activePlayer;
 
   let newTurn = () => {
     switchplayers();
-    alert(`Its ${activeplayer.Username}'s go!`)
-  }
-
-
+    alert(`Its ${getActivePlayer().Username}'s go!`);
+    screenSelector.customCursorSwitch();
+  };
 
   const droptkn = function (e) {
-
-    const coordinates = e.target.coordinates
-    const [row, col] = coordinates
-    let box = Gameboard[row][col]
+    const coordinates = e.target.coordinates;
+    const [row, col] = coordinates;
+    let box = Gameboard[row][col];
     if (box.getvalue() === null) {
-      box.marker(activeplayer);
-    } else { droptkn() }
+      box.marker(getActivePlayer());
+    } else {
+      droptkn();
+    }
 
     // CHECK WIN COND HERE
 
-    /*activeplayer needed in arg?*/
-    // box.target.src = Gamecontroller.activeplayer.markerimg
+    /*getActivePlayer needed in arg?*/
+    // box.target.src = Gamecontroller.getActivePlayer.markerimg
+  };
 
-  }
-
-  return { droptkn, newTurn, players, activeplayer, winCheck, playRound, makeBoard, startGame }
-
-
+  return {
+    droptkn,
+    newTurn,
+    players,
+    getActivePlayer,
+    winCheck,
+    playRound,
+    makeBoard,
+    startGame,
+  };
 })();
 
-
-
 function Cell() {
-
-  let value = null
+  let value = null;
 
   const getvalue = () => value;
 
-  const marker = (player) => value = player.marker
+  const marker = (player) => (value = player.marker);
 
-  return { getvalue, marker }
-
+  return { getvalue, marker };
 }
-
 
 // Screen selector
 
 const screenSelector = (function () {
-
   // Need to have the button be unclickable after this idk?
 
-  const tictacBoxes = document.querySelectorAll('.box')
+  const tictacBoxes = document.querySelectorAll(".box");
 
-  let k = 0
+  let k = 0;
 
   for (let i = 0; i < 3; i++) {
-
     for (let j = 0; j < 3; j++) {
-
-      tictacBoxes[k].coordinates = [i, j]
-      k++
+      tictacBoxes[k].coordinates = [i, j];
+      k++;
     }
     // this will assign co-ordinates to the elements associated with the gameboard
+    // should i put this in a start game button
   }
 
   const allowClicks = function () {
+    tictacBoxes.forEach((box) => {
+      box.addEventListener("click", function clickBoxEvent(e) {
+        Gamecontroller.playRound(e);
+      });
+    });
+  };
 
-
-    tictacBoxes.forEach(box => {
-      box.addEventListener('click', function clickBoxEvent(e) {
-        Gamecontroller.playRound(e)
-      })
-
-    })
-
-  }
-
-  const markeranimationsX = function (e, activeplayer) {
-    const node = e.target
-    const nodeImg = document.createElement('img')
-    nodeImg.classList.add("objectfit")
-    nodeImg.src = activeplayer.markerImg
-    node.appendChild(nodeImg)
-  }
+  const markerAnimationsXO = function (e, getActivePlayer) {
+    const node = e.target;
+    const nodeImg = document.createElement("img");
+    nodeImg.classList.add("objectfit");
+    nodeImg.src = getActivePlayer().markerImg;
+    node.appendChild(nodeImg);
+  };
 
   const animateLines = function () {
-
-    const line = document.querySelectorAll('.line');
-    console.log(line)
-    line.forEach(element => {
-      element.style.strokeDashoffset = "0"
-      element.style.animation = "lineduration 1s linear"
+    const line = document.querySelectorAll(".line");
+    console.log(line);
+    line.forEach((element) => {
+      element.style.strokeDashoffset = "0";
+      element.style.animation = "lineduration 1s linear";
     });
     // have to reset all values if you want to restart the game
-  
 
-    // change dash offset 
+    // change dash offset
     // makke keyframes
-  }
+  };
 
-  const updateScreen = () => { 
-  const div = document.querySelectorAll('.box')
-  const img = document.querySelectorAll('img')
-  div.forEach(box => {
-    img.forEach(image => box.removeChild(image))
-  });
-}
+  const resetScreen = () => {
+    const div = document.querySelectorAll(".box");
+    const img = document.querySelectorAll("img");
+    div.forEach((box) => {
+      img.forEach((image) => box.removeChild(image));
+    });
+  };
 
-  const startGame = function () {
-    updateScreen()
-    animateLines()
-    Gamecontroller.startGame()
+  const customCursorSwitch = () => {
+    const body = document.querySelector("body");
+    body.style.cursor = Gamecontroller.getActivePlayer().cursor;
+  };
 
-  }
+  const startButton = document.querySelector("#startBtn");
+  startButton.addEventListener("click", startGame);
 
-
-  const startButton = document.querySelector('#startBtn')
-  startButton.addEventListener('click', startGame)
-
-
-  return { markeranimationsX, allowClicks, }
-
-})()
+  return {
+    markerAnimationsXO,
+    allowClicks,
+    resetScreen,
+    animateLines,
+    customCursorSwitch,
+  };
+})();
